@@ -1,5 +1,13 @@
 import streamlit as st
+import joblib
+import pandas as pd
 
+# Load Models
+tfidf_vectorizer = joblib.load('tfidf_vectorizer.pkl')
+intent_classifier = joblib.load('intent_classifier.pkl')
+
+# Load Dataset
+world_events = pd.read_csv('World Important Dates.csv')
 # Your HistoryBot code here...
 
 # Example start
