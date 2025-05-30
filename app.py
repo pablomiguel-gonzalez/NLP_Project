@@ -20,6 +20,8 @@ def clean_text(text):
         text = re.sub(r'\s+', ' ', text).strip()
     return text
 
+world_events['Name_of_Incident_clean'] = world_events['Name_of_Incident'].apply(clean_text)
+
 # Define your search function (reuse your TF-IDF search code here too)
 from sklearn.metrics.pairwise import cosine_similarity
 
