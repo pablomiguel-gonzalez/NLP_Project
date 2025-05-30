@@ -3,6 +3,7 @@ import joblib
 import pandas as pd
 import re
 import string
+from sklearn.metrics.pairwise import cosine_similarity
 
 # Load your models
 tfidf_vectorizer = joblib.load('tfidf_vectorizer.pkl')
