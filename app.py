@@ -44,7 +44,7 @@ user_input = st.text_input("Ask your question about history:")
 if user_input:
     # Intent prediction
     query_clean = clean_text(user_input)
-    query_vec = intent_vectorizer.transform([query_clean])
+    query_vec = tfidf_vectorizer.transform([query_clean])
     intent = intent_classifier.predict(query_vec)[0]
     
     # TF-IDF Retrieval
