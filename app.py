@@ -42,11 +42,13 @@ st.write("Ask me about historical events, dates, and important figures!")
 user_input = st.text_input("Ask your question about history:")
 
 if user_input:
-    # Intent prediction
-    intent = intent_classifier.predict([query_clean])[0]
+    # Clean the input FIRST
+    query_clean = clean_text(user_input)
 
+    # Then predict intent
+    intent = intent_classifier.predict([query_clean])[0]
     
-    # TF-IDF Retrieval
+    # Then search for event
     results = search_event(user_input, top_n=1)
     
     if not results.empty:
