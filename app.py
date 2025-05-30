@@ -22,6 +22,20 @@ def clean_text(text):
 
 world_events['Name_of_Incident_clean'] = world_events['Name of Incident'].apply(clean_text)
 
+# Clean 'Year' to 'Year_Clean'
+def convert_year(year):
+    if isinstance(year, str):
+        year = year.strip()
+        if 'BC' in year:
+            year_numeric = -int(re.sub('[^0-9]', '', year))
+        else:
+            year_numeric = int(re.sub('[^0-9]', '', year))
+        return year_numeric
+    else:
+        return None
+
+world_events['Year_Clean'] = world_events['Year'].apply(convert_year)
+
 # Define your search function (reuse your TF-IDF search code here too)
 from sklearn.metrics.pairwise import cosine_similarity
 
