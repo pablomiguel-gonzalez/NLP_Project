@@ -52,11 +52,11 @@ if user_input:
     results = search_event(user_input, top_n=1)
     
     if not results.empty:
-        event_name = results.iloc[0]['Name_of_Incident']
+        event_name = results.iloc[0]['Name of Incident']
         impact = results.iloc[0]['Impact']
         year = results.iloc[0]['Year_Clean']
         country = results.iloc[0]['Country']
-        place = results.iloc[0]['Place_Name']
+        place = results.iloc[0]['Place Name']
         
         if year < 0:
             year_str = f"{abs(year)} BC"
