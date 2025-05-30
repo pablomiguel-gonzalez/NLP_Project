@@ -1,14 +1,36 @@
 import streamlit as st
 import joblib
 import pandas as pd
+import re
+import string
 
-# Load Models
+# Load your models
 tfidf_vectorizer = joblib.load('tfidf_vectorizer.pkl')
 intent_classifier = joblib.load('intent_classifier.pkl')
 
-# Load Dataset
+# Load your data
 world_events = pd.read_csv('World Important Dates.csv')
-# Your HistoryBot code here...
+
+# Define your lightweight preprocessing function
+def clean_text(text):
+    if isinstance(text, str):
+        text = text.lower()
+        text = re.sub(f"[{re.escape(string.punctuation)}]", "", text)
+        text = re.sub(r'\s+', ' ', text).strip()
+    return text
+
+# Define your search function (reuse your TF-IDF search code here too)
+from sklearn.metrics.pairwise import cosine_similarity
+
+def search_event(query, top_n=3):
+    query_clean = clean_text(query)
+    query_vec = tfidf_vectorizer.transform([query_clean])
+    similarities = cosine_similarity(query_vec, tfidf_matrix).flatten()
+    top_indices = similarities.argsort()[-top_n:][::-1]
+    return world_events.iloc[top_indices]
+
+# IMPORTANT: You also need to precompute the TF-IDF matrix of all event names
+tfidf_matrix = tfidf_vectorizer.transform(world_events['Name_of_Incident_clean'])
 
 # Example start
 st.title("📚 HistoryBot: Your Historical Events Assistant")
