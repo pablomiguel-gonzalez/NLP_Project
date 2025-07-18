@@ -5,14 +5,14 @@ import re
 import string
 from sklearn.metrics.pairwise import cosine_similarity
 
-# Load your models
+# Load models
 tfidf_vectorizer = joblib.load('tfidf_vectorizer.pkl')
 intent_classifier = joblib.load('intent_classifier.pkl')
 
-# Load your data
+# Load data
 world_events = pd.read_csv('World Important Dates.csv')
 
-# Define your lightweight preprocessing function
+# Define lightweight preprocessing function
 def clean_text(text):
     if isinstance(text, str):
         text = text.lower()
@@ -36,7 +36,7 @@ def convert_year(year):
 
 world_events['Year_Clean'] = world_events['Year'].apply(convert_year)
 
-# Define your search function (reuse your TF-IDF search code here too)
+# Define search function (TF-IDF search code)
 from sklearn.metrics.pairwise import cosine_similarity
 
 def search_event(query, top_n=3):
@@ -46,7 +46,7 @@ def search_event(query, top_n=3):
     top_indices = similarities.argsort()[-top_n:][::-1]
     return world_events.iloc[top_indices]
 
-# IMPORTANT: You also need to precompute the TF-IDF matrix of all event names
+# precompute the TF-IDF matrix of all event names
 tfidf_matrix = tfidf_vectorizer.transform(world_events['Name_of_Incident_clean'])
 
 # Example start
